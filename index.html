@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="DAY FLOW - Your personal daily operating system">
+    <meta name="theme-color" content="#0a0e27">
+    <title>DAY FLOW</title>
+    
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%230a0e27' width='180' height='180'/><circle cx='90' cy='90' r='70' fill='none' stroke='%2300d9ff' stroke-width='4'/><path d='M90 40 L90 90 L60 120' fill='none' stroke='%2300d9ff' stroke-width='4' stroke-linecap='round'/></svg>">
+</head>
+<body data-app-version="1.0.0">
+    <div id="app" class="app-container"></div>
+
+    <!-- AUTH SCREENS -->
+    <template id="template-auth-login">
+        <div class="screen screen-auth" data-screen="login">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <div class="auth-logo">
+                        <svg viewBox="0 0 180 180" class="logo-icon">
+                            <rect fill="none" width="180" height="180"/>
+                            <circle cx="90" cy="90" r="70" fill="none" stroke="currentColor" stroke-width="4"/>
+                            <path d="M90 40 L90 90 L60 120" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h1 class="auth-title">DAY FLOW</h1>
+                    <p class="auth-subtitle">Your day, in flow.</p>
+                </div>
+
+                <form class="auth-form" id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email or Username</label>
+                        <input type="text" id="login-email" name="email" required class="form-input" autocomplete="username">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" name="password" required class="form-input" autocomplete="current-password">
+                    </div>
+
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="remember-me" name="rememberMe" class="checkbox-input">
+                        <label for="remember-me" class="checkbox-label">Remember me</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-large">Login</button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="#" data-action="show-signup" class="link">Create one</a></p>
+                </div>
+
+                <div class="auth-info">
+                    <p class="text-sm text-secondary">All data is stored locally. No server required.</p>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="template-auth-signup">
+        <div class="screen screen-auth" data-screen="signup">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h1 class="auth-title">Create Account</h1>
+                    <p class="auth-subtitle">Let's build your day.</p>
+                </div>
+
+                <form class="auth-form" id="signup-form">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" name="name" required class="form-input" autocomplete="name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" name="email" required class="form-input" autocomplete="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" name="password" required class="form-input" autocomplete="new-password">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-confirm">Confirm Password</label>
+                        <input type="password" id="signup-confirm" name="confirm" required class="form-input" autocomplete="new-password">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-large">Create Account</button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="#" data-action="show-login" class="link">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- ONBOARDING SCREENS -->
+    <template id="template-onboarding">
+        <div class="screen screen-onboarding" data-screen="onboarding">
+            <div class="onboarding-container">
+                <div class="onboarding-header">
+                    <div class="onboarding-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%"></div>
+                        </div>
+                        <p class="progress-text"><span class="current-step">1</span> of <span class="total-steps">8</span></p>
+                    </div>
+                </div>
+
+                <div class="onboarding-content">
+                    <!-- Step 1: Welcome -->
+                    <div class="onboarding-step" data-step="1">
+                        <h2>Let's build your day.</h2>
+                        <p>DAY FLOW learns your routine and helps you stay in flow. A few quick questions to get started.</p>
+                        <div class="onboarding-illustration">
+                            <svg viewBox="0 0 200 200">
+                                <circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"/>
+                                <circle cx="100" cy="100" r="60" fill="none" stroke="currentColor" stroke-width="2" opacity="0.5"/>
+                                <circle cx="100" cy="100" r="40" fill="none" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Personal Info -->
+                    <div class="onboarding-step" data-step="2" style="display: none;">
+                        <h2>Let's start with you.</h2>
+                        <form class="onboarding-form">
+                            <div class="form-group">
+                                <label for="onboard-name">Full Name</label>
+                                <input type="text" id="onboard-name" name="name" class="form-input" placeholder="Angelo">
+                            </div>
+                            <div class="form-group">
+                                <label for="onboard-email">Email</label>
+                                <input type="email" id="onboard-email" name="email" class="form-input" placeholder="you@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="onboard-occupation">Occupation</label>
+                                <select id="onboard-occupation" name="occupation" class="form-input">
+                                    <option value="">Select occupation</option>
+                                    <option value="office-worker">Office Worker</option>
+                                    <option value="student">Student</option>
+                                    <option value="freelancer">Freelancer</option>
+                                    <option value="entrepreneur">Entrepreneur</option>
+                                    <option value="remote-worker">Remote Worker</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Step 3: Sleep & Morning -->
+                    <div class="onboarding-step" data-step="3" style="display: none;">
+                        <h2>Your sleep & morning.</h2>
+                        <form class="onboarding-form">
+                            <div class="form-group">
+                                <label for="onboard-wake">Wake Time</label>
+                                <input type="time" id="onboard-wake" name="wakeTime" class="form-input" value="05:00">
+                            </div>
+                            <div class="form-group">
+                                <label for="onboard-sleep">Sleep Time</label>
+                                <input type="time" id="onboard-sleep" name="sleepTime" class="form-input" value="22:00">
+                            </div>
+                            <div class="form-group">
+                                <label for="onboard-morning">Morning Routine Duration (min)</label>
+                                <input type="number" id="onboard-morning" name="morningMinutes" class="form-input" value="45" min="10" max="180">
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Step 4: Work Schedule -->
+                    <div class="onboarding-step" data-step="4" style="display: none;">
+                        <h2>Your work schedule.</h2>
+                        <form class="onboarding-form">
+                            <div class="form-group">
+                                <label for="onboard-work-days">Work Days</label>
+                                <div class="weekday-selector">
+                                    <label class="weekday-chip"><input type="checkbox" name="workDays" value="1" checked> Mon</label>
+                                    <label class="weekday-chip"><input type="checkbox" name="workDays" value="2" checked> Tue</label>
+                                    <label class="weekday-chip"><input type="checkbox" name="workDays" value="3" checked> Wed</label>
+                                    <label class="weekday-chip"><input type="checkbox" name="workDays" value="4" checked> Thu</label>
+                                    <label class="weekday-chip"><input type="checkbox" name="workDays" value="5" checked> Fri</label>
+                                    <label class="weekday-chip"><input type="checkbox" name="workDays" value="6"> Sat</label>
+                                    <label class="weekday-chip"><input type="checkbox" name="workDays" value="0"> Sun</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="onboard-work-start">Work Start Time</label>
+                                <input type="time" id="onboard-work-start" name="workStart" class="form-input" value="08:00">
+                            </div>
+                            <div class="form-group">
+                                <label for="onboard-work-end">Work End Time</label>
+                                <input type="time" id="onboard-work-end" name="workEnd" class="form-input" value="17:00">
+                            </div>
+                            <div class="form-group">
+                                <label for="onboard-lunch-start">Lunch Start Time</label>
+                                <input type="time" id="onboard-lunch-start" name="lunchStart" class="form-input" value="12:00">
+                            </div>
+                            <div class="form-group">
+                                <label for="onboard-lunch-end">Lunch End Time</label>
+                                <input type="time" id="onboard-lunch-end" name="lunchEnd" class="form-input" value="13:00">
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Step 5: Commute -->
+                    <div class="onboarding-step" data-step="5" style="display: none;">
+                        <h2>Your commute.</h2>
+                        <form class="onboarding-form">
+                            <div class="form-group">
+                                <label for="onboard-commute">Commute Duration (minutes)</label>
+                                <input type="number" id="onboard-commute" name="commuteMinutes" class="form-input" value="30" min="0" max="180">
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Step 6: Habits -->
+                    <div class="onboarding-step" data-step="6" style="display: none;">
+                        <h2>What habits matter to you?</h2>
+                        <p class="text-secondary">Select habits to build into your day.</p>
+                        <div class="habit-selection">
+                            <label class="habit-chip">
+                                <input type="checkbox" name="defaultHabits" value="drink-water">
+                                <span>💧 Drink Water</span>
+                            </label>
+                            <label class="habit-chip">
+                                <input type="checkbox" name="defaultHabits" value="exercise" checked>
+                                <span>🏃 Exercise</span>
+                            </label>
+                            <label class="habit-chip">
+                                <input type="checkbox" name="defaultHabits" value="read" checked>
+                                <span>📖 Read</span>
+                            </label>
+                            <label class="habit-chip">
+                                <input type="checkbox" name="defaultHabits" value="sleep-on-time" checked>
+                                <span>😴 Sleep on Time</span>
+                            </label>
+                            <label class="habit-chip">
+                                <input type="checkbox" name="defaultHabits" value="walk">
+                                <span>🚶 Walk</span>
+                            </label>
+                            <label class="habit-chip">
+                                <input type="checkbox" name="defaultHabits" value="stretch">
+                                <span>🧘 Stretch</span>
+                            </label>
+                            <label class="habit-chip">
+                                <input type="checkbox" name="defaultHabits" value="meditate">
+                                <span>🧘‍♀️ Meditate</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Step 7: Preferences -->
+                    <div class="onboarding-step" data-step="7" style="display: none;">
+                        <h2>Your preferences.</h2>
+                        <form class="onboarding-form">
+                            <div class="form-checkbox">
+                                <input type="checkbox" id="pref-notifications" name="notifications" checked class="checkbox-input">
+                                <label for="pref-notifications" class="checkbox-label">Enable Notifications</label>
+                            </div>
+                            <div class="form-checkbox">
+                                <input type="checkbox" id="pref-auto-schedule" name="autoSchedule" checked class="checkbox-input">
+                                <label for="pref-auto-schedule" class="checkbox-label">Auto-Schedule Tasks & Habits</label>
+                            </div>
+                            <div class="form-checkbox">
+                                <input type="checkbox" id="pref-smart-suggestions" name="smartSuggestions" checked class="checkbox-input">
+                                <label for="pref-smart-suggestions" class="checkbox-label">Smart Suggestions</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="pref-theme">Theme</label>
+                                <select id="pref-theme" name="theme" class="form-input">
+                                    <option value="dark">Dark</option>
+                                    <option value="light">Light</option>
+                                    <option value="system">System</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Step 8: Generate Day -->
+                    <div class="onboarding-step" data-step="8" style="display: none;">
+                        <h2>Generating your first day...</h2>
+                        <div class="generate-illustration">
+                            <div class="spinner"></div>
+                        </div>
+                        <p class="text-center text-secondary">DAY FLOW is building your personal schedule.</p>
+                    </div>
+                </div>
+
+                <div class="onboarding-footer">
+                    <button type="button" class="btn btn-secondary" id="onboard-prev" style="display: none;">Back</button>
+                    <button type="button" class="btn btn-primary" id="onboard-next">Next</button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- HOME SCREEN -->
+    <template id="template-home">
+        <div class="screen screen-home" data-screen="home">
+            <div class="screen-header">
+                <div class="header-top">
+                    <div class="header-greeting">
+                        <h1 data-greeting>Good morning</h1>
+                        <p data-user-name>Angelo</p>
+                    </div>
+                    <button class="btn-icon" data-action="show-profile" aria-label="Profile">
+                        <svg viewBox="0 0 24 24" class="icon">
+                            <circle cx="12" cy="8" r="4"/>
+                            <path d="M12 14c-4 0-6 2-6 4v2h12v-2c0-2-2-4-6-4z"/>
+                        </svg>
+                    </button>
+                </div>
+                <p class="text-secondary" data-selected-date>Today</p>
+            </div>
+
+            <div class="screen-content">
+                <!-- Current Activity -->
+                <section class="section-now">
+                    <div class="card card-current" data-current-item>
+                        <div class="card-header">
+                            <span class="card-label">NOW</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="activity-title">No activity scheduled</h3>
+                            <p class="activity-time">Free time</p>
+                            <div class="progress-indicator">
+                                <div class="progress-bar-small">
+                                    <div class="progress-fill" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Up Next -->
+                <section class="section-up-next">
+                    <h3 class="section-title">Up Next</h3>
+                    <div class="up-next-list" data-up-next>
+                        <div class="empty-state">
+                            <p>No upcoming activities</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Progress -->
+                <section class="section-progress">
+                    <h3 class="section-title">Today</h3>
+                    <div class="progress-grid">
+                        <div class="progress-card">
+                            <div class="progress-value">
+                                <span class="count" data-progress-count="tasks">0</span>
+                                <span class="total">/7</span>
+                            </div>
+                            <p class="progress-label">Tasks</p>
+                        </div>
+                        <div class="progress-card">
+                            <div class="progress-value">
+                                <span class="count" data-progress-count="habits">0</span>
+                                <span class="total">/5</span>
+                            </div>
+                            <p class="progress-label">Habits</p>
+                        </div>
+                        <div class="progress-card">
+                            <div class="progress-value">
+                                <span class="count" data-progress-count="schedule">0</span>
+                                <span class="total">/12</span>
+                            </div>
+                            <p class="progress-label">Schedule</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Quick Links -->
+                <section class="section-quick-actions">
+                    <div class="quick-action-row">
+                        <button class="quick-action" data-action="show-today">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                                <path d="M16 2v4M8 2v4M3 10h18"/>
+                            </svg>
+                            <span>Today</span>
+                        </button>
+                        <button class="quick-action" data-action="add-task">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M12 5v14M5 12h14"/>
+                            </svg>
+                            <span>Task</span>
+                        </button>
+                        <button class="quick-action" data-action="add-habit">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M9 12l2 2 4-4"/>
+                            </svg>
+                            <span>Habit</span>
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </template>
+
+    <!-- TODAY SCREEN -->
+    <template id="template-today">
+        <div class="screen screen-today" data-screen="today">
+            <div class="screen-header">
+                <div class="header-nav">
+                    <button class="btn-icon" data-action="previous-day" aria-label="Previous day">
+                        <svg viewBox="0 0 24 24" class="icon">
+                            <path d="M15 18l-6-6 6-6"/>
+                        </svg>
+                    </button>
+                    <div class="header-date" data-date-strip>Today</div>
+                    <button class="btn-icon" data-action="next-day" aria-label="Next day">
+                        <svg viewBox="0 0 24 24" class="icon">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="screen-content">
+                <div class="timeline-container">
+                    <div class="timeline" data-schedule-list>
+                        <div class="empty-state">
+                            <p>No activities scheduled</p>
+                            <p class="text-sm text-secondary">Generate your first day flow</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="screen-footer">
+                <button class="btn btn-secondary" data-action="regenerate-day">Regenerate Day</button>
+            </div>
+        </div>
+    </template>
+
+    <!-- TASKS SCREEN -->
+    <template id="template-tasks">
+        <div class="screen screen-tasks" data-screen="tasks">
+            <div class="screen-header">
+                <h1>Tasks</h1>
+                <div class="header-controls">
+                    <input type="search" class="search-input" id="task-search" placeholder="Search tasks...">
+                </div>
+            </div>
+
+            <div class="screen-content">
+                <div class="filter-bar">
+                    <select id="task-filter" class="filter-select">
+                        <option value="">All Tasks</option>
+                        <option value="today">Today</option>
+                        <option value="overdue">Overdue</option>
+                        <option value="completed">Completed</option>
+                        <option value="work">Work</option>
+                        <option value="personal">Personal</option>
+                        <option value="health">Health</option>
+                    </select>
+                </div>
+
+                <div class="task-list" data-task-list>
+                    <div class="empty-state">
+                        <svg viewBox="0 0 100 100" class="empty-icon">
+                            <rect x="20" y="30" width="60" height="50" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <path d="M30 50L45 60L70 35" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <p>No tasks yet</p>
+                        <p class="text-sm text-secondary">Add something you want to accomplish</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- HABITS SCREEN -->
+    <template id="template-habits">
+        <div class="screen screen-habits" data-screen="habits">
+            <div class="screen-header">
+                <h1>Habits</h1>
+            </div>
+
+            <div class="screen-content">
+                <div class="habit-list" data-habit-list>
+                    <div class="empty-state">
+                        <svg viewBox="0 0 100 100" class="empty-icon">
+                            <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <path d="M35 50L45 60L65 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <p>No habits yet</p>
+                        <p class="text-sm text-secondary">Build a small routine</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- INSIGHTS SCREEN -->
+    <template id="template-insights">
+        <div class="screen screen-insights" data-screen="insights">
+            <div class="screen-header">
+                <h1>Insights</h1>
+            </div>
+
+            <div class="screen-content">
+                <section class="section-insights">
+                    <h3 class="section-title">This Week</h3>
+                    <div class="insights-grid">
+                        <div class="insight-card">
+                            <div class="insight-value">82%</div>
+                            <p class="insight-label">Tasks Completed</p>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-value">76%</div>
+                            <p class="insight-label">Habits Completed</p>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-value">88%</div>
+                            <p class="insight-label">Schedule Adherence</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section-insights">
+                    <h3 class="section-title">Current Streaks</h3>
+                    <div class="streak-list">
+                        <div class="empty-state">
+                            <p class="text-sm text-secondary">Complete a few tasks and habits to unlock streaks</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section-insights">
+                    <h3 class="section-title">Productivity</h3>
+                    <div class="productivity-chart">
+                        <div class="empty-state">
+                            <p class="text-sm text-secondary">Build data to see your productivity trends</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </template>
+
+    <!-- MODALS -->
+    <template id="template-modal-task">
+        <div class="modal modal-task" id="modal-task">
+            <div class="modal-overlay" data-action="close-modal"></div>
+            <div class="modal-content modal-sheet">
+                <div class="modal-header">
+                    <h2 id="modal-task-title">Add Task</h2>
+                    <button class="btn-icon" data-action="close-modal" aria-label="Close">
+                        <svg viewBox="0 0 24 24" class="icon">
+                            <path d="M18 6L6 18M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <form class="modal-form" id="task-form">
+                    <div class="form-group">
+                        <label for="task-title">Task Title</label>
+                        <input type="text" id="task-title" name="title" required class="form-input" placeholder="e.g., Buy groceries">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="task-description">Description (optional)</label>
+                        <textarea id="task-description" name="description" class="form-input" rows="3" placeholder="Add details..."></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="task-date">Date</label>
+                            <input type="date" id="task-date" name="date" required class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="task-duration">Duration (min)</label>
+                            <input type="number" id="task-duration" name="duration" class="form-input" value="30" min="5" max="480">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="task-category">Category</label>
+                            <select id="task-category" name="category" class="form-input">
+                                <option value="work">Work</option>
+                                <option value="personal">Personal</option>
+                                <option value="health">Health</option>
+                                <option value="study">Study</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-priority">Priority</label>
+                            <select id="task-priority" name="priority" class="form-input">
+                                <option value="low">Low</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="task-recurring" name="recurring" class="checkbox-input">
+                        <label for="task-recurring" class="checkbox-label">Recurring task</label>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-secondary" data-action="close-modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Task</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </template>
+
+    <template id="template-modal-habit">
+        <div class="modal modal-habit" id="modal-habit">
+            <div class="modal-overlay" data-action="close-modal"></div>
+            <div class="modal-content modal-sheet">
+                <div class="modal-header">
+                    <h2 id="modal-habit-title">Add Habit</h2>
+                    <button class="btn-icon" data-action="close-modal" aria-label="Close">
+                        <svg viewBox="0 0 24 24" class="icon">
+                            <path d="M18 6L6 18M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <form class="modal-form" id="habit-form">
+                    <div class="form-group">
+                        <label for="habit-title">Habit Name</label>
+                        <input type="text" id="habit-title" name="title" required class="form-input" placeholder="e.g., Exercise">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="habit-description">Description (optional)</label>
+                        <textarea id="habit-description" name="description" class="form-input" rows="2" placeholder="Why is this habit important?"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="habit-duration">Duration (min)</label>
+                            <input type="number" id="habit-duration" name="duration" class="form-input" value="30" min="5" max="240">
+                        </div>
+                        <div class="form-group">
+                            <label for="habit-frequency">Frequency</label>
+                            <select id="habit-frequency" name="frequency" class="form-input">
+                                <option value="daily">Daily</option>
+                                <option value="weekdays">Weekdays</option>
+                                <option value="weekly">Weekly</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="habit-time">Preferred Time</label>
+                        <input type="time" id="habit-time" name="preferredTime" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Target Days (weekly)</label>
+                        <div class="weekday-selector">
+                            <label class="weekday-chip"><input type="checkbox" name="targetDays" value="1" checked> Mon</label>
+                            <label class="weekday-chip"><input type="checkbox" name="targetDays" value="2" checked> Tue</label>
+                            <label class="weekday-chip"><input type="checkbox" name="targetDays" value="3" checked> Wed</label>
+                            <label class="weekday-chip"><input type="checkbox" name="targetDays" value="4" checked> Thu</label>
+                            <label class="weekday-chip"><input type="checkbox" name="targetDays" value="5" checked> Fri</label>
+                            <label class="weekday-chip"><input type="checkbox" name="targetDays" value="6"> Sat</label>
+                            <label class="weekday-chip"><input type="checkbox" name="targetDays" value="0"> Sun</label>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-secondary" data-action="close-modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Habit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </template>
+
+    <!-- PROFILE MODAL -->
+    <template id="template-modal-profile">
+        <div class="modal modal-profile" id="modal-profile">
+            <div class="modal-overlay" data-action="close-modal"></div>
+            <div class="modal-content modal-sheet">
+                <div class="modal-header">
+                    <h2>Profile</h2>
+                    <button class="btn-icon" data-action="close-modal" aria-label="Close">
+                        <svg viewBox="0 0 24 24" class="icon">
+                            <path d="M18 6L6 18M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="profile-form" class="profile-form">
+                        <div class="form-group">
+                            <label for="profile-name">Name</label>
+                            <input type="text" id="profile-name" name="name" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profile-email">Email</label>
+                            <input type="email" id="profile-email" name="email" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profile-occupation">Occupation</label>
+                            <input type="text" id="profile-occupation" name="occupation" class="form-input">
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <h3 class="form-section-title">Schedule</h3>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="profile-wake">Wake Time</label>
+                                <input type="time" id="profile-wake" name="wakeTime" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label for="profile-sleep">Sleep Time</label>
+                                <input type="time" id="profile-sleep" name="sleepTime" class="form-input">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="profile-work-start">Work Start</label>
+                                <input type="time" id="profile-work-start" name="workStart" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label for="profile-work-end">Work End</label>
+                                <input type="time" id="profile-work-end" name="workEnd" class="form-input">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="profile-lunch-start">Lunch Start</label>
+                                <input type="time" id="profile-lunch-start" name="lunchStart" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label for="profile-lunch-end">Lunch End</label>
+                                <input type="time" id="profile-lunch-end" name="lunchEnd" class="form-input">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profile-commute">Commute (min)</label>
+                            <input type="number" id="profile-commute" name="commuteMinutes" class="form-input" min="0" max="180">
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <div class="modal-actions">
+                            <button type="button" class="btn btn-secondary" data-action="close-modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+
+                    <div class="profile-menu">
+                        <button class="btn btn-secondary btn-block" data-action="show-settings">Settings</button>
+                        <button class="btn btn-secondary btn-block" data-action="logout">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- SETTINGS MODAL -->
+    <template id="template-modal-settings">
+        <div class="modal modal-settings" id="modal-settings">
+            <div class="modal-overlay" data-action="close-modal"></div>
+            <div class="modal-content modal-sheet">
+                <div class="modal-header">
+                    <h2>Settings</h2>
+                    <button class="btn-icon" data-action="close-modal" aria-label="Close">
+                        <svg viewBox="0 0 24 24" class="icon">
+                            <path d="M18 6L6 18M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <h3 class="settings-section-title">Appearance</h3>
+                    <div class="form-group">
+                        <label for="settings-theme">Theme</label>
+                        <select id="settings-theme" name="theme" class="form-input">
+                            <option value="dark">Dark</option>
+                            <option value="light">Light</option>
+                            <option value="system">System</option>
+                        </select>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <h3 class="settings-section-title">Notifications</h3>
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="settings-notifications" name="notifications" class="checkbox-input">
+                        <label for="settings-notifications" class="checkbox-label">Enable Notifications</label>
+                    </div>
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="settings-sound" name="sound" class="checkbox-input">
+                        <label for="settings-sound" class="checkbox-label">Sound</label>
+                    </div>
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="settings-vibration" name="vibration" class="checkbox-input">
+                        <label for="settings-vibration" class="checkbox-label">Vibration</label>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <h3 class="settings-section-title">Behavior</h3>
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="settings-auto-schedule" name="autoSchedule" class="checkbox-input">
+                        <label for="settings-auto-schedule" class="checkbox-label">Auto-Schedule Tasks & Habits</label>
+                    </div>
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="settings-smart-suggestions" name="smartSuggestions" class="checkbox-input">
+                        <label for="settings-smart-suggestions" class="checkbox-label">Smart Suggestions</label>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <h3 class="settings-section-title">Data</h3>
+                    <button type="button" class="btn btn-secondary btn-block" data-action="export-backup">Export Backup</button>
+                    <button type="button" class="btn btn-secondary btn-block" data-action="import-backup">Import Backup</button>
+
+                    <div class="divider"></div>
+
+                    <h3 class="settings-section-title">Danger Zone</h3>
+                    <button type="button" class="btn btn-danger btn-block" data-action="reset-app">Reset App</button>
+
+                    <div class="divider"></div>
+
+                    <h3 class="settings-section-title">About</h3>
+                    <p class="text-sm text-secondary">DAY FLOW v1.0.0</p>
+                    <p class="text-sm text-secondary">Offline-first productivity app</p>
+                    <p class="text-sm text-secondary">All data stored locally on your device</p>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- CONFLICT MODAL -->
+    <template id="template-modal-conflict">
+        <div class="modal modal-conflict" id="modal-conflict">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Schedule Conflict</h2>
+                </div>
+                <div class="modal-body">
+                    <p id="conflict-message"></p>
+                    <div class="conflict-details" id="conflict-details"></div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" data-action="close-modal">Dismiss</button>
+                    <button type="button" class="btn btn-primary" data-action="auto-repair">Auto Fix</button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- BOTTOM NAVIGATION -->
+    <template id="template-bottom-nav">
+        <nav class="bottom-nav" role="navigation">
+            <button class="nav-item" data-action="show-home" aria-label="Home">
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+                <span class="nav-label">Home</span>
+            </button>
+            <button class="nav-item" data-action="show-today" aria-label="Today">
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <rect x="3" y="4" width="18" height="18" rx="2"/>
+                    <path d="M16 2v4M8 2v4M3 10h18"/>
+                </svg>
+                <span class="nav-label">Today</span>
+            </button>
+            <button class="nav-item nav-fab" id="fab-btn" aria-label="Add">
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <path d="M12 5v14M5 12h14"/>
+                </svg>
+            </button>
+            <button class="nav-item" data-action="show-tasks" aria-label="Tasks">
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <path d="M9 11l3 3L22 4M11 15H3v2h8v-2z"/>
+                </svg>
+                <span class="nav-label">Tasks</span>
+            </button>
+            <button class="nav-item" data-action="show-habits" aria-label="Habits">
+                <svg class="nav-icon" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="M9 12l2 2 4-4"/>
+                </svg>
+                <span class="nav-label">Habits</span>
+            </button>
+        </nav>
+    </template>
+
+    <!-- FAB MENU -->
+    <template id="template-fab-menu">
+        <div class="fab-menu" id="fab-menu">
+            <button class="fab-item" data-action="add-task">
+                <svg viewBox="0 0 24 24" class="icon">
+                    <path d="M12 5v14M5 12h14"/>
+                </svg>
+                <span>Task</span>
+            </button>
+            <button class="fab-item" data-action="add-habit">
+                <svg viewBox="0 0 24 24" class="icon">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M9 12l2 2 4-4"/>
+                </svg>
+                <span>Habit</span>
+            </button>
+            <button class="fab-item" data-action="show-today">
+                <svg viewBox="0 0 24 24" class="icon">
+                    <rect x="3" y="4" width="18" height="18" rx="2"/>
+                </svg>
+                <span>Schedule</span>
+            </button>
+        </div>
+    </template>
+
+    <script src="js/data.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/scheduler.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
