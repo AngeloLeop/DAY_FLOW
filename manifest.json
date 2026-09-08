@@ -1,0 +1,72 @@
+{
+  "name": "DAY FLOW",
+  "short_name": "DAY FLOW",
+  "description": "Manage Your Time. Live Your Day. — Offline-first intelligent daily scheduling.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#0a0e27",
+  "background_color": "#0a0e27",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%230a0e27' width='192' height='192'/><circle cx='96' cy='96' r='70' fill='none' stroke='%23ffffff' stroke-width='4'/><path d='M96 40 L96 96 L66 126' fill='none' stroke='%23ffffff' stroke-width='4' stroke-linecap='round'/></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%230a0e27' width='192' height='192'/><circle cx='96' cy='96' r='70' fill='none' stroke='%23ffffff' stroke-width='4'/><path d='M96 40 L96 96 L66 126' fill='none' stroke='%23ffffff' stroke-width='4' stroke-linecap='round'/></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 540 720'><rect fill='%230a0e27' width='540' height='720'/></svg>",
+      "sizes": "540x720",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    }
+  ],
+  "categories": ["productivity", "lifestyle"],
+  "shortcuts": [
+    {
+      "name": "Add Task",
+      "short_name": "Task",
+      "description": "Quickly add a new task",
+      "url": "/?action=add-task",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><circle cx='48' cy='48' r='45' fill='%230a0e27'/><path d='M48 20v56M20 48h56' stroke='%23ffffff' stroke-width='4' stroke-linecap='round'/></svg>",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "View Today",
+      "short_name": "Today",
+      "description": "View today's schedule",
+      "url": "/?action=show-today",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><circle cx='48' cy='48' r='45' fill='%230a0e27'/><rect x='25' y='30' width='46' height='46' rx='3' fill='none' stroke='%23ffffff' stroke-width='3'/></svg>",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}
