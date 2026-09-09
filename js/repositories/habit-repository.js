@@ -3,4 +3,4 @@
  * Database operations for habits
  */
 
-// Placeholder for future implementation
+(function (root) { const DF = root.DayFlow; DF.habits = new DF.BaseRepository('habits', DF.Habit); DF.habits.forDate = async (userId, date) => (await DF.habits.forUser(userId)).filter(x => x.occursOn(date)); })(globalThis);

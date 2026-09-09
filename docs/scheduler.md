@@ -1,25 +1,20 @@
 # DAY FLOW Scheduler
 
-## Scheduling Algorithm
+The engine is deterministic and independent of the DOM. Its public generation input is a date, preferences, tasks, habits, and fixed events; its output is a versionable plan.
 
-### Activity Types
-- **FIXED**: Never moves (work, appointments, sleep)
-- **SEMI_FIXED**: Preferred time but can shift (morning routine)
-- **FLEXIBLE**: Can move anywhere (tasks, exercises)
-- **OPTIONAL**: Can be removed if no space (nice-to-have activities)
+## Contract
 
-### Priority Levels
-- 0–20: OPTIONAL
-- 21–40: LOW
-- 41–60: NORMAL
-- 61–80: HIGH
-- 81–99: VERY_HIGH
-- 100: CRITICAL
+Activity types are ordered `FIXED → SEMI_FIXED → FLEXIBLE → OPTIONAL`. Priorities are `0–20 OPTIONAL`, `21–40 LOW`, `41–60 NORMAL`, `61–80 HIGH`, `81–99 VERY_HIGH`, and `100 CRITICAL`.
 
-### Core Rules
-1. FIXED commitments are protected
-2. FLEXIBLE activities move first
-3. OPTIONAL activities may be removed
-4. CRITICAL commitments are never silently moved
+The non-negotiable rules are:
 
-## Placeholder for algorithm details
+1. Fixed commitments are protected.
+2. Flexible activities move before fixed commitments.
+3. Optional activities may be removed when no space remains.
+4. Critical commitments are never silently moved.
+
+## V1 implementation
+
+The engine ranks candidates, topologically orders dependencies, adapts duration from local actual-history averages, places activities around fixed events and configurable buffers, reports unscheduled work with reasons, detects overlaps, and rejects fixed-versus-fixed conflicts. Plans retain an incrementing version and previous-version link when regenerated.
+
+Late starts and mid-day regeneration schedule remaining work after the current time. Past, started, and completed plan items are protected. Added appointments that collide with protected work are surfaced instead of silently moving either item. Each scheduled item includes a plain-language explanation; overload, dependency, conflict, optional-removal, protection, versioning, and learned-duration behavior are covered by tests.
