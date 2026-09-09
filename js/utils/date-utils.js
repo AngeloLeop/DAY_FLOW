@@ -5,7 +5,14 @@
 
 (function (root) {
   const pad = n => String(n).padStart(2, '0');
-  const toDate = value => value instanceof Date ? new Date(value) : new Date(value || Date.now());
+  const toDate = value => {
+    if (value instanceof Date) return new Date(value);
+    if (/^\d{4}-\d{2}-\d{2}$/.test(String(value || ''))) {
+      const [year, month, day] = String(value).split('-').map(Number);
+      return new Date(year, month - 1, day);
+    }
+    return new Date(value || Date.now());
+  };
   root.DayFlow = root.DayFlow || {};
   root.DayFlow.dates = {
     dateKey(value) { const d = toDate(value); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; },

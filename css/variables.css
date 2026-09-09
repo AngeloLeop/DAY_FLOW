@@ -5,13 +5,13 @@
 
 :root {
   color-scheme: dark; --bg: #070b18; --surface: #10182b; --surface-2: #17223a;
-  --text: #f5f7ff; --muted: #94a3bd; --primary: #18c8e8; --primary-strong: #55e3ff;
-  --danger: #ff647c; --success: #4ade9a; --border: rgba(255,255,255,.1);
-  --shadow: 0 18px 50px rgba(0,0,0,.32); --radius: 18px; --radius-sm: 11px;
+  --text: #f7f9ff; --muted: #a8b5c9; --primary: #27c4da; --primary-strong: #68ddec;
+  --on-primary: #03151b; --semi-fixed: #c4b8ff; --danger: #b42335; --success: #4ade9a; --border: rgba(255,255,255,.1);
+  --shadow: 0 18px 50px rgba(0,0,0,.28); --radius: 20px; --radius-sm: 12px;
   --space-1: .4rem; --space-2: .75rem; --space-3: 1rem; --space-4: 1.5rem; --space-5: 2rem;
   --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
-@media (prefers-color-scheme: light) { :root { color-scheme: light; --bg:#f3f7fb; --surface:#fff; --surface-2:#e8f0f7; --text:#102039; --muted:#53637b; --primary:#00738a; --primary-strong:#005a70; --border:rgba(15,35,60,.12); --shadow:0 18px 45px rgba(30,60,90,.14); } }
+@media (prefers-color-scheme: light) { :root { color-scheme: light; --bg:#f4f7f9; --surface:#fff; --surface-2:#eaf0f3; --text:#102039; --muted:#53637b; --primary:#00768c; --primary-strong:#005a70; --on-primary:#fff; --semi-fixed:#573ca8; --border:rgba(15,35,60,.12); --shadow:0 16px 40px rgba(30,60,90,.12); } }
 :root[data-theme="dark"] { color-scheme: dark; --bg:#070b18; --surface:#10182b; --surface-2:#17223a; --text:#f5f7ff; --muted:#aebbd0; --border:rgba(255,255,255,.1); --shadow:0 18px 50px rgba(0,0,0,.32); }
-:root[data-theme="light"] { color-scheme: light; --bg:#f3f7fb; --surface:#fff; --surface-2:#e8f0f7; --text:#102039; --muted:#53637b; --primary:#00738a; --primary-strong:#005a70; --border:rgba(15,35,60,.12); --shadow:0 18px 45px rgba(30,60,90,.14); }
+:root[data-theme="light"] { color-scheme: light; --bg:#f3f7fb; --surface:#fff; --surface-2:#e8f0f7; --text:#102039; --muted:#53637b; --primary:#00738a; --primary-strong:#005a70; --on-primary:#fff; --semi-fixed:#573ca8; --border:rgba(15,35,60,.12); --shadow:0 18px 45px rgba(30,60,90,.14); }
 * { box-sizing: border-box; }

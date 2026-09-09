@@ -1,6 +1,6 @@
 {
   "name": "day-flow",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "scripts": { "test": "node --test --test-concurrency=1 tests/*.test.js" },
   "engines": { "node": ">=20" }

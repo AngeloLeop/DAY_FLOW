@@ -13,8 +13,8 @@ The non-negotiable rules are:
 3. Optional activities may be removed when no space remains.
 4. Critical commitments are never silently moved.
 
-## V1 implementation
+## Current implementation
 
-The engine ranks candidates, topologically orders dependencies, adapts duration from local actual-history averages, places activities around fixed events and configurable buffers, reports unscheduled work with reasons, detects overlaps, and rejects fixed-versus-fixed conflicts. Plans retain an incrementing version and previous-version link when regenerated.
+The engine ranks candidates, topologically orders dependencies, expands ordered routine steps, allocates goal sessions toward real weekly targets, optionally adapts duration from local actual-history averages, and converts configured workdays plus commute time into protected local blocks. It places other activities inside availability windows around fixed events and transition buffers, reports unscheduled work with reasons, computes free windows, detects every overlapping pair, and rejects fixed-versus-fixed conflicts. Plans retain an incrementing version and previous-version link when regenerated.
 
-Late starts and mid-day regeneration schedule remaining work after the current time. Past, started, and completed plan items are protected. Added appointments that collide with protected work are surfaced instead of silently moving either item. Each scheduled item includes a plain-language explanation; overload, dependency, conflict, optional-removal, protection, versioning, and learned-duration behavior are covered by tests.
+Late starts and mid-day regeneration schedule remaining work after the current time. Started and completed work, the current activity, fixed commitments, and critical commitments are protected. Added appointments that collide with protected work are surfaced instead of silently moving either item. Each scheduled item and unscheduled activity includes a plain-language explanation, while each revision summarizes protected, moved, and deferred work. Local learning requires at least two actual-duration samples and can be disabled.
