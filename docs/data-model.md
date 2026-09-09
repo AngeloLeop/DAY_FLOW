@@ -11,11 +11,13 @@ IndexedDB uses the database name `DAY_FLOW_DB`, currently at schema version 2. E
 | `habits` | Recurring planned activities | `userId`, `status` |
 | `events` | Fixed commitments | `userId`, `status`, `date` |
 | `goals` | Longer-term objectives | `userId`, `status` |
-| `plans` | Generated planned schedules and versions | `userId`, `date`, compound `userDate` |
-| `activityLogs` | Actual execution/behavior records | `userId`, `planId`, `date` |
+| `plans` | Generated schedules, free windows, decision summaries, and immutable version history | `userId`, `date`, compound `userDate` |
+| `activityLogs` | Actual starts, pauses, completion, duration, and user decision records | `userId`, `planId`, `date` |
 | `settings` | User-scoped preferences | `userId` |
 
-`plans` and `activityLogs` deliberately separate intended schedules from actual behavior. Later phases must not store actual start/end/duration values by mutating the original plan.
+`plans` and `activityLogs` deliberately separate intended schedules from actual behavior. Live Flow never replaces a plan item's original start, end, or planned duration with actual execution values. Regeneration saves a new plan record linked through `previousVersionId`; all prior versions remain queryable.
+
+Tasks may define flexibility, priority, dependencies, deadlines, availability windows, preferred time, and a goal link. Routines contain ordered required or optional steps. Goals define weekly targets and session sizes. Events may reserve explicit transition buffers before and after a fixed commitment. User preferences retain workdays, work hours, commute duration, sleep boundaries, theme, notifications, and the local-learning opt-out used by the engine.
 
 ## Lifecycle statuses
 

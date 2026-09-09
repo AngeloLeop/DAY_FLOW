@@ -7,10 +7,10 @@
  * - Network-first application shell with offline cache fallback
  * - Background sync (when available)
  * 
- * Security: No eval(), no unsafe DOM manipulation
+ * Security: no dynamic code execution or unsafe DOM manipulation
  */
 
-const CACHE_VERSION = 'v1.5.0';
+const CACHE_VERSION = 'v1.1.0';
 const CACHE_NAMES = {
   CORE: `dayflow-core-${CACHE_VERSION}`,
   ASSETS: `dayflow-assets-${CACHE_VERSION}`,
@@ -55,6 +55,7 @@ const CORE_ASSETS = [
   '/js/services/notification-service.js',
   '/js/services/backup-service.js',
   '/js/services/sync-service.js',
+  '/js/services/daily-flow-service.js',
   '/js/device/device-info.js',
   '/js/device/permissions.js',
   '/js/state.js',
@@ -126,7 +127,7 @@ self.addEventListener('fetch', (event) => {
           if (response.ok) caches.open(CACHE_NAMES.CORE).then((cache) => cache.put(request, response.clone()));
           return response;
         })
-        .catch(() => caches.match(request))
+        .catch(async () => (await caches.match(request)) || (request.mode === 'navigate' ? await caches.match('./index.html') : undefined) || Response.error())
     );
     return;
   }
@@ -145,7 +146,7 @@ self.addEventListener('fetch', (event) => {
         });
         return response;
       })
-      .catch(() => caches.match(request))
+      .catch(async () => (await caches.match(request)) || Response.error())
   );
 });
 

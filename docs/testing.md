@@ -13,9 +13,9 @@ npm test
 - State publication, unsubscribe behavior, and declared-key validation
 - Local account creation, password verification, and weak/invalid credential rejection
 - Dependency ordering and circular-dependency detection
-- Normal/late scheduling, overdue/future selection, fixed conflicts, overload, dependencies, optional removal, protected current/completed work, mid-day regeneration, version links, and learned durations
+- Normal/late scheduling, overdue/future selection, nested and fixed conflicts, overload, dependencies, optional removal, availability windows, transition buffers, ordered routines, weekly goal allocation, protected current/completed work, mid-day regeneration, version history, and opt-out local learning
 - Backup structural/schema validation, explicit confirmation, atomic round-trip recovery, and encrypted backup authentication
-- App locking and repeated-login throttling
+- App locking, persistent remembered-lock state, repeated-login throttling, Live Flow planned/actual separation, and service-worker fallback behavior
 
 Browser verification covers bootstrap, account creation, onboarding, navigation, IndexedDB persistence, console errors, accessibility, and offline reload.
 

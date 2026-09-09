@@ -11,7 +11,9 @@ Offline-first intelligent daily scheduling application. No server. No external d
 - Service Worker and PWA APIs
 - No browser framework, CDN, tracking, advertising, server, or external AI API in V1
 
-V1 is a complete local-first release with account/app locking, onboarding, tasks, routines, fixed events, goals, deterministic scheduling and rescheduling, Today/Plan views, history-backed insights, optional notifications, encrypted backup/restore, and installable offline PWA support.
+Version 1.1 is a complete local-first release with account/app locking, onboarding, tasks, ordered routines, protected fixed events, goal-driven time allocation, deterministic scheduling and adaptive replanning, interactive Live Flow, recoverable plan history, real-data insights, optional notifications, encrypted backup/restore, and installable offline PWA support.
+
+The Today experience is organized around the current moment: it shows what is happening now, what comes next, important upcoming blocks, and remaining capacity. Starting, pausing, completing, skipping, extending, or rejecting an activity records actual behavior separately from its original planned values. Replanning creates a new plan version and explains what was protected, moved, or deferred.
 
 ## Getting Started
 
@@ -21,7 +23,7 @@ git clone https://github.com/AngeloLeop/DAY_FLOW.git
 cd DAY_FLOW
 
 # Serve locally (e.g., using Python)
-python -m http.server 8000
+python3 -m http.server 8000 --bind 0.0.0.0
 
 # Visit http://localhost:8000
 ```

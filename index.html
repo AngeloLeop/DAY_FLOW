@@ -16,7 +16,7 @@
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
 </head>
-<body data-app-version="1.0.0">
+<body data-app-version="1.1.0">
     <div id="app" class="app-container"></div>
 
     <!-- AUTH SCREENS -->
@@ -153,10 +153,6 @@
                                 <input type="text" id="onboard-name" name="name" class="form-input" placeholder="Angelo">
                             </div>
                             <div class="form-group">
-                                <label for="onboard-email">Email</label>
-                                <input type="email" id="onboard-email" name="email" class="form-input" placeholder="you@example.com">
-                            </div>
-                            <div class="form-group">
                                 <label for="onboard-occupation">Occupation</label>
                                 <select id="onboard-occupation" name="occupation" class="form-input">
                                     <option value="">Select occupation</option>
@@ -182,10 +178,6 @@
                             <div class="form-group">
                                 <label for="onboard-sleep">Sleep Time</label>
                                 <input type="time" id="onboard-sleep" name="sleepTime" class="form-input" value="22:00">
-                            </div>
-                            <div class="form-group">
-                                <label for="onboard-morning">Morning Routine Duration (min)</label>
-                                <input type="number" id="onboard-morning" name="morningMinutes" class="form-input" value="45" min="10" max="180">
                             </div>
                         </form>
                     </div>
@@ -276,18 +268,6 @@
                     <div class="onboarding-step" data-step="7" style="display: none;">
                         <h2>Your preferences.</h2>
                         <form class="onboarding-form">
-                            <div class="form-checkbox">
-                                <input type="checkbox" id="pref-notifications" name="notifications" checked class="checkbox-input">
-                                <label for="pref-notifications" class="checkbox-label">Enable Notifications</label>
-                            </div>
-                            <div class="form-checkbox">
-                                <input type="checkbox" id="pref-auto-schedule" name="autoSchedule" checked class="checkbox-input">
-                                <label for="pref-auto-schedule" class="checkbox-label">Auto-Schedule Tasks & Habits</label>
-                            </div>
-                            <div class="form-checkbox">
-                                <input type="checkbox" id="pref-smart-suggestions" name="smartSuggestions" checked class="checkbox-input">
-                                <label for="pref-smart-suggestions" class="checkbox-label">Smart Suggestions</label>
-                            </div>
                             <div class="form-group">
                                 <label for="pref-theme">Theme</label>
                                 <select id="pref-theme" name="theme" class="form-input">
@@ -317,115 +297,32 @@
         </div>
     </template>
 
-    <!-- HOME SCREEN -->
+    <!-- TODAY / LIVE FLOW -->
     <template id="template-home">
         <div class="screen screen-home" data-screen="home">
-            <div class="screen-header">
-                <div class="header-top">
-                    <div class="header-greeting">
-                        <h1 data-greeting>Good morning</h1>
-                        <p data-user-name>Angelo</p>
-                    </div>
-                    <button class="btn-icon" data-action="show-profile" aria-label="Profile">
-                        <svg viewBox="0 0 24 24" class="icon">
-                            <circle cx="12" cy="8" r="4"/>
-                            <path d="M12 14c-4 0-6 2-6 4v2h12v-2c0-2-2-4-6-4z"/>
-                        </svg>
-                    </button>
-                </div>
-                <p class="text-secondary" data-selected-date>Today</p>
-            </div>
-
-            <div class="screen-content">
-                <!-- Current Activity -->
-                <section class="section-now">
-                    <div class="card card-current" data-current-item>
-                        <div class="card-header">
-                            <span class="card-label">NOW</span>
-                        </div>
-                        <div class="card-body">
-                            <h3 class="activity-title">No activity scheduled</h3>
-                            <p class="activity-time">Free time</p>
-                            <div class="progress-indicator">
-                                <div class="progress-bar-small">
-                                    <div class="progress-fill" style="width: 0%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <header class="screen-header live-header">
+                <div class="header-top"><div><p class="eyebrow">YOUR DAY IN FLOW</p><h1 data-greeting>Good morning</h1><p class="text-secondary"><span data-user-name></span> · <span data-selected-date>Today</span></p></div><div class="live-clock" data-current-time role="timer" aria-label="Current time">--:--</div></div>
+            </header>
+            <main class="screen-content live-flow">
+                <section aria-labelledby="now-heading"><div class="section-heading"><h2 id="now-heading">Now</h2><span class="status-pill" data-current-status>READY</span></div>
+                    <article class="card card-current" data-current-item>
+                        <div class="empty-state"><strong>Your day is open.</strong><p>Add an activity and DAY FLOW will build a realistic plan.</p><button class="btn btn-primary" data-action="add-activity">Add first activity</button></div>
+                    </article>
                 </section>
-
-                <!-- Up Next -->
-                <section class="section-up-next">
-                    <h3 class="section-title">Up Next</h3>
-                    <div class="up-next-list" data-up-next>
-                        <div class="empty-state">
-                            <p>No upcoming activities</p>
-                        </div>
-                    </div>
+                <section aria-labelledby="next-heading"><div class="section-heading"><h2 id="next-heading">Next</h2></div><div data-next-item></div></section>
+                <section aria-labelledby="upcoming-heading"><div class="section-heading"><h2 id="upcoming-heading">Upcoming</h2><button class="text-button" data-action="show-today">Full plan</button></div><div class="up-next-list" data-up-next></div></section>
+                <section aria-labelledby="overview-heading"><div class="section-heading"><h2 id="overview-heading">Day overview</h2></div>
+                    <div class="overview-grid"><div class="metric-card"><strong data-day-metric="scheduled">0m</strong><span>Scheduled left</span></div><div class="metric-card"><strong data-day-metric="free">0m</strong><span>Free time</span></div><div class="metric-card"><strong data-day-metric="important">0</strong><span>Important</span></div><div class="metric-card"><strong data-day-metric="warnings">0</strong><span>Needs attention</span></div></div>
+                    <div class="flow-notice" data-flow-notice hidden></div>
                 </section>
-
-                <!-- Progress -->
-                <section class="section-progress">
-                    <h3 class="section-title">Today</h3>
-                    <div class="progress-grid">
-                        <div class="progress-card">
-                            <div class="progress-value">
-                                <span class="count" data-progress-count="tasks">0</span>
-                                <span class="total">/7</span>
-                            </div>
-                            <p class="progress-label">Tasks</p>
-                        </div>
-                        <div class="progress-card">
-                            <div class="progress-value">
-                                <span class="count" data-progress-count="habits">0</span>
-                                <span class="total">/5</span>
-                            </div>
-                            <p class="progress-label">Habits</p>
-                        </div>
-                        <div class="progress-card">
-                            <div class="progress-value">
-                                <span class="count" data-progress-count="schedule">0</span>
-                                <span class="total">/12</span>
-                            </div>
-                            <p class="progress-label">Schedule</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Quick Links -->
-                <section class="section-quick-actions">
-                    <div class="quick-action-row">
-                        <button class="quick-action" data-action="show-today">
-                            <svg class="icon" viewBox="0 0 24 24">
-                                <rect x="3" y="4" width="18" height="18" rx="2"/>
-                                <path d="M16 2v4M8 2v4M3 10h18"/>
-                            </svg>
-                            <span>Plan</span>
-                        </button>
-                        <button class="quick-action" data-action="add-task">
-                            <svg class="icon" viewBox="0 0 24 24">
-                                <path d="M12 5v14M5 12h14"/>
-                            </svg>
-                            <span>Task</span>
-                        </button>
-                        <button class="quick-action" data-action="add-habit">
-                            <svg class="icon" viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="M9 12l2 2 4-4"/>
-                            </svg>
-                            <span>Habit</span>
-                        </button>
-                    </div>
-                </section>
-            </div>
+            </main>
         </div>
     </template>
 
     <!-- TODAY SCREEN -->
     <template id="template-today">
         <div class="screen screen-today" data-screen="today">
-            <div class="screen-header">
+            <header class="screen-header">
                 <div class="header-nav">
                     <button class="btn-icon" data-action="previous-day" aria-label="Previous day">
                         <svg viewBox="0 0 24 24" class="icon">
@@ -439,14 +336,18 @@
                         </svg>
                     </button>
                 </div>
-            </div>
+                <div class="plan-heading"><div><p class="eyebrow">REALISTIC DAILY PLAN</p><h1>Plan</h1></div><button class="btn btn-secondary btn-compact" data-action="show-history">History</button></div>
+                <label class="search-field"><span class="sr-only">Search your DAY FLOW data</span><input type="search" class="search-input" id="global-search" placeholder="Search activities, events, routines, goals…"></label>
+            </header>
 
-            <div class="screen-content">
+            <main class="screen-content">
+                <div class="search-results" data-search-results hidden></div>
                 <div class="quick-action-row plan-links">
                     <button class="quick-action" data-action="show-tasks"><span>Tasks</span></button>
                     <button class="quick-action" data-action="show-habits"><span>Routines</span></button>
                     <button class="quick-action" data-action="show-goals"><span>Goals</span></button>
                 </div>
+                <div class="capacity-banner" data-plan-capacity></div>
                 <div class="timeline-container">
                     <div class="timeline" data-schedule-list>
                         <div class="empty-state">
@@ -455,10 +356,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                <section><div class="section-heading"><h2>Free windows</h2></div><div class="free-windows" data-free-windows></div></section>
+                <section><div class="section-heading"><h2>Why this plan</h2></div><div class="explanation-list" data-plan-explanations></div></section>
+            </main>
 
             <div class="screen-footer">
-                <button class="btn btn-secondary" data-action="regenerate-day">Regenerate Day</button>
+                <button class="btn btn-primary" data-action="replan-day">Replan my day</button>
             </div>
         </div>
     </template>
@@ -534,19 +437,22 @@
                     <h3 class="section-title">This Week</h3>
                     <div class="insights-grid">
                         <div class="insight-card">
-                            <div class="insight-value" data-insight="tasks">0%</div>
-                            <p class="insight-label">Tasks Completed</p>
+                            <div class="insight-value" data-insight="completion">0%</div>
+                            <p class="insight-label">Completed</p>
                         </div>
                         <div class="insight-card">
-                            <div class="insight-value" data-insight="habits">0%</div>
-                            <p class="insight-label">Habits Completed</p>
+                            <div class="insight-value" data-insight="variance">0%</div>
+                            <p class="insight-label">Time variance</p>
                         </div>
                         <div class="insight-card">
-                            <div class="insight-value" data-insight="schedule">0%</div>
-                            <p class="insight-label">Schedule Adherence</p>
+                            <div class="insight-value" data-insight="overloaded">0</div>
+                            <p class="insight-label">Overloaded days</p>
                         </div>
                     </div>
                 </section>
+
+                <section class="section-insights"><h3 class="section-title">Goal progress</h3><div class="goal-progress-list" data-goal-progress></div></section>
+                <section class="section-insights"><h3 class="section-title">Local observations</h3><div class="observation-list" data-observations></div></section>
 
                 <section class="section-insights">
                     <h3 class="section-title">Current Streaks</h3>
@@ -569,7 +475,9 @@
         </div>
     </template>
 
-    <template id="template-goals"><div class="screen" data-screen="goals"><div class="screen-header"><h1>Goals</h1></div><div class="screen-content"><div class="habit-list" data-goal-list><div class="empty-state">No goals yet</div></div></div></div></template>
+    <template id="template-goals"><div class="screen" data-screen="goals"><header class="screen-header"><p class="eyebrow">TIME THAT MATCHES YOUR VALUES</p><h1>Goals</h1><p class="text-secondary">DAY FLOW uses weekly targets to reserve realistic goal sessions.</p></header><main class="screen-content"><div class="habit-list" data-goal-list></div><button class="btn btn-primary btn-block section-action" data-action="add-goal">Add goal</button></main></div></template>
+
+    <template id="template-history"><div class="screen" data-screen="history"><header class="screen-header"><div class="header-top"><div><p class="eyebrow">PLANS AND REALITY</p><h1>History</h1></div><button class="btn-icon" data-action="show-today" aria-label="Close history">×</button></div><div class="segmented" role="group" aria-label="Calendar view"><button class="active" data-action="history-day">Day</button><button data-action="history-week">Week</button><button data-action="history-month">Month</button></div></header><main class="screen-content"><div class="history-summary" data-history-summary></div><div class="history-list" data-history-list></div></main></div></template>
 
     <!-- MODALS -->
     <template id="template-modal-task">
@@ -621,6 +529,8 @@
                         <div class="form-group">
                             <label for="task-priority">Priority</label>
                             <select id="task-priority" name="priority" class="form-input">
+                                <option value="critical">Critical</option>
+                                <option value="very-high">Very high</option>
                                 <option value="low">Low</option>
                                 <option value="medium" selected>Medium</option>
                                 <option value="high">High</option>
@@ -628,10 +538,8 @@
                         </div>
                     </div>
 
-                    <div class="form-checkbox">
-                        <input type="checkbox" id="task-recurring" name="recurring" class="checkbox-input">
-                        <label for="task-recurring" class="checkbox-label">Recurring task</label>
-                    </div>
+                    <div class="form-row"><div class="form-group"><label for="task-type">Flexibility</label><select id="task-type" name="type" class="form-input"><option value="FLEXIBLE">Flexible</option><option value="SEMI_FIXED">Semi-fixed</option><option value="OPTIONAL">Optional</option></select></div><div class="form-group"><label for="task-preferred">Preferred time</label><input type="time" id="task-preferred" name="preferredTime" class="form-input"></div></div>
+                    <div class="form-row"><div class="form-group"><label for="task-from">Available from</label><input type="time" id="task-from" name="availableFrom" class="form-input"></div><div class="form-group"><label for="task-until">Finish by</label><input type="time" id="task-until" name="availableUntil" class="form-input"></div></div>
 
                     <div class="modal-actions">
                         <button type="button" class="btn btn-secondary" data-action="close-modal">Cancel</button>
@@ -699,6 +607,8 @@
                         </div>
                     </div>
 
+                    <div class="form-group"><label for="routine-items">Ordered routine items (optional)</label><textarea id="routine-items" name="routineItems" class="form-input" rows="4" placeholder="Shower | 10 | required&#10;Breakfast | 20 | required&#10;Read | 10 | optional"></textarea><small class="text-secondary">One item per line: name | minutes | required or optional</small></div>
+
                     <div class="modal-actions">
                         <button type="button" class="btn btn-secondary" data-action="close-modal">Cancel</button>
                         <button type="submit" class="btn btn-primary">Save Habit</button>
@@ -712,15 +622,16 @@
         <div class="modal" id="modal-event"><div class="modal-overlay" data-action="close-modal"></div><div class="modal-content modal-sheet">
             <div class="modal-header"><h2>Add Fixed Event</h2><button class="btn-icon" data-action="close-modal" aria-label="Close">×</button></div>
             <form class="modal-form" id="event-form">
-                <div class="form-group"><label for="event-title">Event title</label><input id="event-title" name="title" required class="form-input"></div>
+                <div class="form-group"><label for="event-title">Event or appointment title</label><input id="event-title" name="title" required class="form-input"></div>
                 <div class="form-group"><label for="event-date">Date</label><input type="date" id="event-date" name="date" required class="form-input"></div>
                 <div class="form-row"><div class="form-group"><label for="event-start">Start</label><input type="time" id="event-start" name="startTime" required class="form-input"></div><div class="form-group"><label for="event-end">End</label><input type="time" id="event-end" name="endTime" required class="form-input"></div></div>
+                <div class="form-row"><div class="form-group"><label for="event-before">Buffer before</label><input type="number" id="event-before" name="bufferBefore" min="0" max="120" value="0" class="form-input"></div><div class="form-group"><label for="event-after">Buffer after</label><input type="number" id="event-after" name="bufferAfter" min="0" max="120" value="0" class="form-input"></div></div>
                 <div class="modal-actions"><button type="button" class="btn btn-secondary" data-action="close-modal">Cancel</button><button type="submit" class="btn btn-primary">Save Event</button></div>
             </form>
         </div></div>
     </template>
 
-    <template id="template-modal-goal"><div class="modal" id="modal-goal"><div class="modal-overlay" data-action="close-modal"></div><div class="modal-content modal-sheet"><div class="modal-header"><h2>Add Goal</h2><button class="btn-icon" data-action="close-modal" aria-label="Close">×</button></div><form id="goal-form"><div class="form-group"><label for="goal-title">Goal</label><input id="goal-title" name="title" required class="form-input"></div><div class="form-group"><label for="goal-deadline">Deadline</label><input type="date" id="goal-deadline" name="deadline" class="form-input"></div><div class="modal-actions"><button type="button" class="btn btn-secondary" data-action="close-modal">Cancel</button><button class="btn btn-primary">Save Goal</button></div></form></div></div></template>
+    <template id="template-modal-goal"><div class="modal" id="modal-goal"><div class="modal-overlay" data-action="close-modal"></div><div class="modal-content modal-sheet"><div class="modal-header"><h2>Add Goal</h2><button class="btn-icon" data-action="close-modal" aria-label="Close">×</button></div><form id="goal-form"><div class="form-group"><label for="goal-title">Goal</label><input id="goal-title" name="title" required class="form-input"></div><div class="form-group"><label for="goal-deadline">Deadline</label><input type="date" id="goal-deadline" name="deadline" class="form-input"></div><div class="form-row"><div class="form-group"><label for="goal-weekly">Weekly target (minutes)</label><input type="number" id="goal-weekly" name="weeklyTargetMinutes" min="15" max="2400" value="150" class="form-input"></div><div class="form-group"><label for="goal-session">Session length</label><input type="number" id="goal-session" name="sessionMinutes" min="5" max="240" value="30" class="form-input"></div></div><div class="form-group"><label for="goal-time">Preferred time</label><input type="time" id="goal-time" name="preferredTime" class="form-input"></div><div class="modal-actions"><button type="button" class="btn btn-secondary" data-action="close-modal">Cancel</button><button class="btn btn-primary">Save Goal</button></div></form></div></div></template>
 
     <!-- PROFILE MODAL -->
     <template id="template-modal-profile">
@@ -756,6 +667,16 @@
                         <div class="divider"></div>
 
                         <h3 class="form-section-title">Schedule</h3>
+
+                        <div class="form-group"><span class="checkbox-label">Work days</span><div class="weekday-selector">
+                            <label class="weekday-chip"><input type="checkbox" name="profileWorkDays" value="1"> Mon</label>
+                            <label class="weekday-chip"><input type="checkbox" name="profileWorkDays" value="2"> Tue</label>
+                            <label class="weekday-chip"><input type="checkbox" name="profileWorkDays" value="3"> Wed</label>
+                            <label class="weekday-chip"><input type="checkbox" name="profileWorkDays" value="4"> Thu</label>
+                            <label class="weekday-chip"><input type="checkbox" name="profileWorkDays" value="5"> Fri</label>
+                            <label class="weekday-chip"><input type="checkbox" name="profileWorkDays" value="6"> Sat</label>
+                            <label class="weekday-chip"><input type="checkbox" name="profileWorkDays" value="0"> Sun</label>
+                        </div></div>
 
                         <div class="form-row">
                             <div class="form-group">
@@ -844,26 +765,12 @@
                         <input type="checkbox" id="settings-notifications" name="notifications" class="checkbox-input">
                         <label for="settings-notifications" class="checkbox-label">Enable Notifications</label>
                     </div>
-                    <div class="form-checkbox">
-                        <input type="checkbox" id="settings-sound" name="sound" class="checkbox-input">
-                        <label for="settings-sound" class="checkbox-label">Sound</label>
-                    </div>
-                    <div class="form-checkbox">
-                        <input type="checkbox" id="settings-vibration" name="vibration" class="checkbox-input">
-                        <label for="settings-vibration" class="checkbox-label">Vibration</label>
-                    </div>
-
-                    <div class="divider"></div>
-
                     <h3 class="settings-section-title">Behavior</h3>
                     <div class="form-checkbox">
-                        <input type="checkbox" id="settings-auto-schedule" name="autoSchedule" class="checkbox-input">
-                        <label for="settings-auto-schedule" class="checkbox-label">Auto-Schedule Tasks & Habits</label>
+                        <input type="checkbox" id="settings-learning" name="learningEnabled" class="checkbox-input">
+                        <label for="settings-learning" class="checkbox-label">Use local activity history to improve estimates</label>
                     </div>
-                    <div class="form-checkbox">
-                        <input type="checkbox" id="settings-smart-suggestions" name="smartSuggestions" class="checkbox-input">
-                        <label for="settings-smart-suggestions" class="checkbox-label">Smart Suggestions</label>
-                    </div>
+                    <div class="form-group"><label for="settings-buffer">Default transition buffer (minutes)</label><input type="number" id="settings-buffer" name="bufferMinutes" min="0" max="60" class="form-input"></div>
 
                     <div class="divider"></div>
 
@@ -880,29 +787,9 @@
                     <div class="divider"></div>
 
                     <h3 class="settings-section-title">About</h3>
-                    <p class="text-sm text-secondary">DAY FLOW v1.0.0</p>
-                    <p class="text-sm text-secondary">Offline-first productivity app</p>
+                    <p class="text-sm text-secondary">DAY FLOW v1.1.0</p>
+                    <p class="text-sm text-secondary">Offline-first adaptive daily-flow assistant</p>
                     <p class="text-sm text-secondary">All data stored locally on your device</p>
-                </div>
-            </div>
-        </div>
-    </template>
-
-    <!-- CONFLICT MODAL -->
-    <template id="template-modal-conflict">
-        <div class="modal modal-conflict" id="modal-conflict">
-            <div class="modal-overlay"></div>
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Schedule Conflict</h2>
-                </div>
-                <div class="modal-body">
-                    <p id="conflict-message"></p>
-                    <div class="conflict-details" id="conflict-details"></div>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" data-action="close-modal">Dismiss</button>
-                    <button type="button" class="btn btn-primary" data-action="auto-repair">Auto Fix</button>
                 </div>
             </div>
         </div>
@@ -947,27 +834,11 @@
 
     <!-- FAB MENU -->
     <template id="template-fab-menu">
-        <div class="fab-menu" id="fab-menu">
-            <button class="fab-item" data-action="add-task">
-                <svg viewBox="0 0 24 24" class="icon">
-                    <path d="M12 5v14M5 12h14"/>
-                </svg>
-                <span>Task</span>
-            </button>
-            <button class="fab-item" data-action="add-habit">
-                <svg viewBox="0 0 24 24" class="icon">
-                    <circle cx="12" cy="12" r="10"/>
-                    <path d="M9 12l2 2 4-4"/>
-                </svg>
-                <span>Habit</span>
-            </button>
-            <button class="fab-item" data-action="add-event">
-                <svg viewBox="0 0 24 24" class="icon">
-                    <rect x="3" y="4" width="18" height="18" rx="2"/>
-                </svg>
-                <span>Fixed event</span>
-            </button>
-            <button class="fab-item" data-action="add-goal"><span>◎</span><span>Goal</span></button>
+        <div class="fab-menu" id="fab-menu" role="dialog" aria-label="Quick actions">
+            <p class="fab-label">CREATE</p>
+            <div class="fab-grid"><button class="fab-item" data-action="add-activity"><span>＋</span><span>Activity</span></button><button class="fab-item" data-action="add-task"><span>✓</span><span>Task</span></button><button class="fab-item" data-action="add-event"><span>◇</span><span>Event</span></button><button class="fab-item" data-action="add-appointment"><span>◷</span><span>Appointment</span></button><button class="fab-item" data-action="add-habit"><span>↻</span><span>Routine</span></button><button class="fab-item" data-action="add-goal"><span>◎</span><span>Goal</span></button></div>
+            <p class="fab-label">ADAPT MY DAY</p>
+            <div class="fab-adapt"><button class="fab-item" data-action="im-late">I’m late</button><button class="fab-item" data-action="im-early">I’m early</button><button class="fab-item" data-action="need-more-time">Need more time</button><button class="fab-item" data-action="finished-early">Finished early</button><button class="fab-item" data-action="skip-current">Skip this</button><button class="fab-item" data-action="cant-do-current">Can’t do this</button><button class="fab-item fab-primary" data-action="replan-day">Replan my day</button></div>
         </div>
     </template>
 
@@ -1003,6 +874,7 @@
     <script src="js/services/notification-service.js"></script>
     <script src="js/services/backup-service.js"></script>
     <script src="js/services/sync-service.js"></script>
+    <script src="js/services/daily-flow-service.js"></script>
     <script src="js/device/device-info.js"></script>
     <script src="js/device/permissions.js"></script>
     <script src="js/state.js"></script>

@@ -4,7 +4,7 @@
  */
 
 (function (root) {
-  const bytesToBase64 = bytes => btoa(String.fromCharCode(...bytes));
+  const bytesToBase64 = bytes => { let output = ''; for (let index = 0; index < bytes.length; index += 8192) output += String.fromCharCode(...bytes.subarray(index, index + 8192)); return btoa(output); };
   const base64ToBytes = value => Uint8Array.from(atob(value), c => c.charCodeAt(0));
   root.DayFlow = root.DayFlow || {};
   root.DayFlow.crypto = {

@@ -11,6 +11,6 @@
     async encrypt(value, passphrase) { this.validate(value); return DF.crypto.encryptJson(value, passphrase); },
     async decrypt(value, passphrase) { if (value?.format !== 'day-flow-encrypted-backup') return value; return DF.crypto.decryptJson(value, passphrase); },
     async restore(value, { confirmed = false } = {}) { this.validate(value); if (!confirmed) throw new Error('Restore requires explicit overwrite confirmation'); await DF.db.replaceAll(value.data); return true; },
-    download(value) { const blob = new Blob([JSON.stringify(value, null, 2)], { type: 'application/json' }); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = `day-flow-${DF.dates.dateKey()}${value.format === 'day-flow-encrypted-backup' ? '-encrypted' : ''}.json`; link.click(); setTimeout(() => URL.revokeObjectURL(link.href), 0); }
+    download(value) { const blob = new Blob([JSON.stringify(value, null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob); const link = document.createElement('a'); link.href = url; link.download = `day-flow-${DF.dates.dateKey()}${value.format === 'day-flow-encrypted-backup' ? '-encrypted' : ''}.json`; link.hidden = true; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000); }
   };
 })(globalThis);

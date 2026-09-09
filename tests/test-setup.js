@@ -23,7 +23,7 @@ const files = [
   'repositories/user-repository.js', 'repositories/task-repository.js', 'repositories/habit-repository.js',
   'repositories/event-repository.js', 'repositories/plan-repository.js', 'repositories/goal-repository.js', 'repositories/activity-log-repository.js', 'security/crypto.js',
   'security/auth.js', 'security/access-control.js', 'engine/dependency-resolver.js',
-  'engine/conflict-resolver.js', 'engine/optimizer.js', 'engine/scheduler.js', 'services/backup-service.js'
+  'engine/conflict-resolver.js', 'engine/optimizer.js', 'engine/scheduler.js', 'services/backup-service.js', 'services/daily-flow-service.js'
 ];
 for (const file of files) require(path.join(__dirname, '..', 'js', file));
 global.DayFlow.db.enableMemoryAdapterForTests();

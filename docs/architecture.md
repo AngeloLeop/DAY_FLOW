@@ -22,12 +22,12 @@ Engine modules contain no DOM access. Repositories accept a database adapter thr
 
 `index.html` loads classic scripts in explicit dependency order and starts `js/app.js` after the DOM is available. Bootstrap installs global error reporting, opens the database, restores the local session, initializes the router, binds delegated UI events, and registers the service worker. Initialization is idempotent and renders a safe error screen if required storage cannot start.
 
-The hash router owns template mounting but receives authentication guards, navigation rendering, and route callbacks from the application. The state store accepts only declared keys and returns unsubscribe functions for every subscriber.
+The hash router owns template mounting but receives authentication guards, navigation rendering, and route callbacks from the application. The state store accepts only declared keys and returns unsubscribe functions for every subscriber. `DailyFlowService` coordinates Live Flow actions across plans, activity logs, and source repositories; it does not contain DOM access or scheduling rules.
 
 ## Repository structure
 
 The existing `js/` module layout remains authoritative. Top-level `assets/`, `screens/`, `components/`, `scripts/`, `backend/`, `api/`, `database/`, and `deploy/` directories are reserved by the project contract. No browser module has been duplicated into those directories.
 
-## V1 boundary
+## Local-first boundary
 
-V1 is browser-only and fully usable without a backend. `backend/`, `api/`, `database/`, and `deploy/` remain reserved extension points; no remote sync or server is required. Notifications are scheduled while the application session is active because browsers do not provide a portable local alarm API without a push service.
+The current release is browser-only and fully usable without a backend. `backend/`, `api/`, `database/`, and `deploy/` remain reserved extension points; no remote sync or server is required. Notifications are scheduled while the application session is active because browsers do not provide a portable local alarm API without a push service.

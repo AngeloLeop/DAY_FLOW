@@ -12,6 +12,6 @@
 
 ## Offline-authentication limitations
 
-Local authentication protects access through the DAY FLOW UI; it is not equivalent to operating-system disk encryption. A person or extension with access to the browser profile may inspect IndexedDB. Login attempts are temporarily throttled and users can manually lock the app. Password recovery, cross-device identity, multi-factor authentication, and operating-system-backed key storage are intentionally unavailable in the offline V1 model.
+Local authentication protects access through the DAY FLOW UI; it is not equivalent to operating-system disk encryption. A person or extension with access to the browser profile may inspect IndexedDB. Login attempts use progressive throttling, remembered sessions preserve their lock state, and users can manually lock the app. Password recovery, cross-device identity, multi-factor authentication, and operating-system-backed key storage are intentionally unavailable in the offline model.
 
 Backups can be protected with authenticated AES-256-GCM encryption. Plain JSON export is intentionally available for portability and must be treated as sensitive because it includes local account-verification material and schedule data.
