@@ -1,15 +1,7 @@
 # DAY FLOW Backup & Restore
 
-## Export
-- Full data export with versioning
-- Optional encryption
-- Validation before export
+The backup service exports a versioned JSON envelope containing every declared object store. Users may optionally encrypt it with AES-256-GCM using a PBKDF2-SHA-256 derived key; the passphrase never leaves the device.
 
-## Import
-- Version compatibility checking
-- Pre-import validation
-- Confirmation before restore
-- Transaction-safe restore
-- Never silently overwrites user data
+Import validates format, store shapes, and schema compatibility before requesting explicit overwrite confirmation. Restore replaces all stores in one IndexedDB transaction, so a failure aborts the whole operation. The test adapter provides equivalent snapshot rollback semantics.
 
-## Placeholder for detailed procedures
+Plain JSON exports remain available for portability and must be treated as sensitive. DAY FLOW cannot recover a forgotten encrypted-backup passphrase.

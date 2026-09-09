@@ -4,13 +4,13 @@
  * Handles:
  * - Offline detection & sync
  * - Cache management
- * - Network-first strategy for API, cache-first for assets
+ * - Network-first application shell with offline cache fallback
  * - Background sync (when available)
  * 
  * Security: No eval(), no unsafe DOM manipulation
  */
 
-const CACHE_VERSION = 'v1.0.0';
+const CACHE_VERSION = 'v1.5.0';
 const CACHE_NAMES = {
   CORE: `dayflow-core-${CACHE_VERSION}`,
   ASSETS: `dayflow-assets-${CACHE_VERSION}`,
@@ -23,7 +23,54 @@ const CORE_ASSETS = [
   '/css/variables.css',
   '/css/components.css',
   '/css/style.css',
-];
+  '/js/constants.js',
+  '/js/utils/date-utils.js',
+  '/js/utils/validation.js',
+  '/js/utils/logger.js',
+  '/js/models/user.js',
+  '/js/models/task.js',
+  '/js/models/habit.js',
+  '/js/models/event.js',
+  '/js/models/goal.js',
+  '/js/models/plan.js',
+  '/js/models/activity-log.js',
+  '/js/database/migrations.js',
+  '/js/database/db.js',
+  '/js/repositories/base-repository.js',
+  '/js/repositories/user-repository.js',
+  '/js/repositories/task-repository.js',
+  '/js/repositories/habit-repository.js',
+  '/js/repositories/event-repository.js',
+  '/js/repositories/plan-repository.js',
+  '/js/repositories/goal-repository.js',
+  '/js/repositories/activity-log-repository.js',
+  '/js/security/crypto.js',
+  '/js/security/auth.js',
+  '/js/security/access-control.js',
+  '/js/engine/dependency-resolver.js',
+  '/js/engine/conflict-resolver.js',
+  '/js/engine/optimizer.js',
+  '/js/engine/scheduler.js',
+  '/js/services/storage-service.js',
+  '/js/services/notification-service.js',
+  '/js/services/backup-service.js',
+  '/js/services/sync-service.js',
+  '/js/device/device-info.js',
+  '/js/device/permissions.js',
+  '/js/state.js',
+  '/js/router.js',
+  '/js/data.js',
+  '/js/storage.js',
+  '/js/scheduler.js',
+  '/js/app.js',
+  '/manifest.json',
+  '/assets/icon.svg',
+  '/assets/icon-maskable.svg',
+  '/assets/icon-192.png',
+  '/assets/icon-512.png',
+  '/assets/icon-maskable-512.png',
+  '/assets/screenshot-mobile.png',
+].map((path) => path === '/' ? './' : `.${path}`);
 
 /**
  * Install event: Cache essential resources
@@ -54,9 +101,8 @@ self.addEventListener('activate', (event) => {
 
 /**
  * Fetch event: Implement caching strategies
- * - Core: cache-first (offline support)
- * - API: network-first (latest data, fallback to cache)
- * - Assets: cache-first with network fallback
+ * - App shell: network-first for updates, cache fallback for offline use
+ * - Other same-origin GET requests: network-first with runtime caching
  */
 self.addEventListener('fetch', (event) => {
   const { request } = event;
@@ -72,21 +118,15 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Core HTML/CSS: Cache first
-  if (request.destination === 'document' || request.destination === 'style') {
+  // App shell: network first so deployed updates are visible, cache fallback offline.
+  if (['document', 'style', 'script'].includes(request.destination)) {
     event.respondWith(
-      caches.match(request)
-        .then((response) => response || fetch(request))
-        .catch(() => caches.match('/index.html'))
-    );
-    return;
-  }
-
-  // Scripts & modules: Cache first
-  if (request.destination === 'script') {
-    event.respondWith(
-      caches.match(request)
-        .then((response) => response || fetch(request))
+      fetch(request)
+        .then((response) => {
+          if (response.ok) caches.open(CACHE_NAMES.CORE).then((cache) => cache.put(request, response.clone()));
+          return response;
+        })
+        .catch(() => caches.match(request))
     );
     return;
   }

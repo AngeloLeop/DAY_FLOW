@@ -4,16 +4,14 @@
 
 Offline-first intelligent daily scheduling application. No server. No external dependencies. All data stored locally.
 
-## Features
+## Technology contract
 
-- 📅 Intelligent daily scheduling
-- 🔒 Local authentication (no server)
-- 📱 PWA-ready (installable, offline-first)
-- ⚡ Vanilla JavaScript (no frameworks)
-- 🗄️ IndexedDB persistence
-- 🔄 Conflict resolution
-- 💾 Safe backup & restore
-- 🎨 Mobile-first design
+- HTML, CSS, and vanilla JavaScript
+- IndexedDB with versioned migrations
+- Service Worker and PWA APIs
+- No browser framework, CDN, tracking, advertising, server, or external AI API in V1
+
+V1 is a complete local-first release with account/app locking, onboarding, tasks, routines, fixed events, goals, deterministic scheduling and rescheduling, Today/Plan views, history-backed insights, optional notifications, encrypted backup/restore, and installable offline PWA support.
 
 ## Getting Started
 
@@ -26,6 +24,12 @@ cd DAY_FLOW
 python -m http.server 8000
 
 # Visit http://localhost:8000
+```
+
+The browser application has no Node.js runtime dependency. Node.js 20 or newer is used only for development tests:
+
+```bash
+npm test
 ```
 
 ## Architecture

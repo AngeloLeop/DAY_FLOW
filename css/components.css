@@ -3,4 +3,32 @@
  * Reusable UI components: buttons, cards, forms, modals
  */
 
-/* Placeholder for future implementation */
+.btn { border: 1px solid transparent; border-radius: var(--radius-sm); padding: .78rem 1rem; font: inherit; font-weight: 700; cursor: pointer; transition: .18s ease; }
+.btn:hover { transform: translateY(-1px); filter: brightness(1.08); }
+.btn:disabled { cursor: default; opacity: .55; transform: none; }
+.btn-primary { color: #03151b; background: var(--primary); }
+.btn-secondary { color: var(--text); background: var(--surface-2); border-color: var(--border); }
+.btn-danger { color: white; background: var(--danger); }
+.btn-large, .btn-block { width: 100%; }
+.btn-icon { display: inline-grid; place-items: center; width: 42px; height: 42px; padding: 0; color: var(--text); background: transparent; border: 0; border-radius: 50%; cursor: pointer; font-size: 1.35rem; }
+.btn-icon:hover { background: var(--surface-2); } .btn-icon.danger { color: var(--danger); }
+.icon, .nav-icon { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.card, .entity-card, .schedule-item, .insight-card, .progress-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+.form-group { display: grid; gap: .45rem; margin-bottom: 1rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+.form-input, .search-input, .filter-select { width: 100%; min-height: 46px; padding: .72rem .85rem; color: var(--text); background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); font: inherit; }
+.form-input:focus, .search-input:focus, .filter-select:focus { outline: 2px solid color-mix(in srgb, var(--primary) 55%, transparent); border-color: var(--primary); }
+.form-checkbox { display: flex; align-items: center; gap: .65rem; margin: .8rem 0; }
+.checkbox-input { width: 19px; height: 19px; accent-color: var(--primary); }
+.weekday-selector { display: flex; gap: .35rem; flex-wrap: wrap; }
+.weekday-chip { padding: .48rem .65rem; background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; font-size: .82rem; }
+.modal { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; opacity: 0; transition: opacity .15s; }
+.modal.open { opacity: 1; }.modal-overlay { position: absolute; inset: 0; background: rgba(2,6,16,.76); backdrop-filter: blur(6px); }
+.modal-content { position: relative; width: min(560px, calc(100% - 2rem)); max-height: min(88vh, 760px); overflow: auto; padding: 1.25rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+.modal-header, .modal-actions, .header-top, .header-nav, .entity-card, .schedule-item { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.modal-header { margin-bottom: 1.2rem; }.modal-actions { justify-content: flex-end; margin-top: 1.2rem; }
+.entity-card { padding: .9rem 1rem; box-shadow: none; }.entity-card.completed { opacity: .58; }.entity-card.completed strong { text-decoration: line-through; }
+.entity-content { display: grid; gap: .25rem; }.entity-actions { display:flex; }
+.schedule-item { padding: .85rem 1rem; box-shadow: none; }.schedule-time { min-width: 72px; color: var(--primary-strong); font-weight: 800; }.schedule-details { flex: 1; display: grid; gap: .2rem; }
+.empty-state { padding: 2rem 1rem; text-align: center; color: var(--muted); }.empty-icon { width: 70px; height: 70px; }
+.toast { position: fixed; z-index: 100; left: 50%; bottom: 6rem; transform: translateX(-50%); padding: .8rem 1rem; background: var(--success); color: #042016; border-radius: 999px; box-shadow: var(--shadow); font-weight: 700; }.toast-error { color: white; background: var(--danger); }
